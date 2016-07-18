@@ -1,5 +1,9 @@
 一、硬件测试环境
-总计5台测试服务器，配置：8C16G，
+总计5台测试服务器，
+配置：8C16G，
+OS：Linux,
+version:3.10.0-229.11.1.el7.x86_64 (builder@kbuilder.dev.centos.org) (gcc version 4.8.3 20140911 (Red Hat 4.8.3-9) (GCC) ) #1 SMP Thu Aug 6 01:06:18 UTC 2015
+
 1台corvus服务器
 3台redis服务器，每个服务器起6个redis，9 master,9 slave
 1台用作测试机
