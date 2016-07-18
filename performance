@@ -1,0 +1,35 @@
+一、硬件测试环境
+总计5台测试服务器，配置：8C16G，
+1台corvus服务器
+3台redis服务器，每个服务器起6个redis，9 master,9 slave
+1台用作测试机
+
+二、corvus服务配置
+bind 54323
+node x.x.x.x:8000
+thread 8
+
+loglevel info
+syslog 0
+
+read-strategy both
+
+三、测试工具
+redis自带的redis-benchmark
+
+四、测试结果
+
+1、非pipeline,set、get，测试命令行./redis-benchmark -h x.x.x.x -p 54322 -n 20000000 -r 10000000 -q -t get,set -c 100
+SET: 41191.34 requests per second
+GET: 41348.54 requests per second
+2、非pipeline,mset，测试命令行./redis-benchmark -h x.x.x.x -p 54322 -n 5000000 -r 10000000 -q -t mset -c 100
+MSET (10 keys): 21393.21 requests per second
+3、pipeline,set、get，测试命令行./redis-benchmark -h x.x.x.x -p 54322 -n 100000000 -r 10000000 -q -t set,get -P 1048 -c 100
+SET: 995074.38 requests per second
+GET: 1077006.00 requests per second
+4、pipeline,mset，测试命令行./redis-benchmark -h x.x.x.x -p 54322 -n 10000000 -r 10000000 -q -t mset -P 1048 -c 100
+MSET (10 keys): 123369.98 requests per second
+
+注意，
+1、这里用到的配置项跟测试用到的服务器有关系的
+2、按照这个配置，在pipeline的时候，已经把corvus服务器cpu跑满，约90%
